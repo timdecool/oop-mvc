@@ -1,9 +1,9 @@
 <?php
 namespace App\Models;
-use App\Models\ModelTemplate;
+use App\Models\Model;
 
 
-class Image extends ModelTemplate {
+class Image extends Model {
     /////////////////////
     ////// SELECTS //////
     /////////////////////

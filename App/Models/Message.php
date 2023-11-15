@@ -1,8 +1,9 @@
 <?php
 namespace App\Models;
-use App\Models\ModelTemplate;
+use App\Models\Model;
 
-class Message extends ModelTemplate {
+class Message extends Model {
+
     public function getAllUserMessages($id) {
         $messages = [];
         $messages = $this->db->query("SELECT * FROM messages 

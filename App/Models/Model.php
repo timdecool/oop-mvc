@@ -2,10 +2,10 @@
 namespace App\Models;
 use App\Services\Database;
 
-class ModelTemplate {
+abstract class Model {
     protected $db;
-
-    protected function __construct() {
+    
+    public function __construct() {
         $this->db = new Database();
     }
 }

@@ -1,8 +1,8 @@
 <?php
 namespace App\Models;
-use App\Models\ModelTemplate;
+use App\Models\Model;
 
-class Conversation extends ModelTemplate {
+class Conversation extends Model {
     public function getAllByUser($id) {
         $conv = [];
         $conv = $this->db->query("SELECT * FROM conversations_users WHERE id_user=? ORDER BY last_seen DESC",[$id],"all");

@@ -1,6 +1,6 @@
 <?php
 namespace App\Controllers;
-use App\Models\UserManager;
+use App\Models\Image;
 use App\Controllers\Controller;
 
 /**
@@ -9,8 +9,8 @@ use App\Controllers\Controller;
 
 class HomeController extends Controller {
     public function index() {
-        $user = new UserManager();
+        $user = new Image();
         $data = $user->getAll();
-        $this->render('./views/template_home.phtml',$data);
+        $this->render('./views/template_gallery.phtml',$data);
     }
 }

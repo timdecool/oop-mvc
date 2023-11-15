@@ -1,8 +1,8 @@
 <?php
 namespace App\Models;
-use App\Models\ModelTemplate;
+use App\Models\Model;
 
-class Comment extends ModelTemplate {
+class Comment extends Model {
     public function getAll() {
         $comments = [];
 

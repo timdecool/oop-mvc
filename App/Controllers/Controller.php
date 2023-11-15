@@ -1,7 +1,7 @@
 <?php
 namespace App\Controllers;
 
-class ControllerTemplate {
+abstract class Controller {
     protected function render($templatePath,$data) {
         ob_start();
         include $templatePath;

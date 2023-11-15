@@ -1,8 +1,8 @@
 <?php
 namespace App\Models;
-use App\Models\ModelTemplate;
+use App\Models\Model;
 
-class Like extends ModelTemplate {
+class Like extends Model {
 
     public function countLikes($id_image) {
         $count = 0;

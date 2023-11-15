@@ -1,8 +1,8 @@
 <?php
 namespace App\Models;
-use App\Models\ModelTemplate;
+use App\Models\Model;
 
-class ImageUser extends ModelTemplate {
+class ImageUser extends Model {
     public function getImageDetails($id) {
         $image = [];
         $image = $this->db->query("SELECT images.*, users.first_name AS first_name, users.last_name AS last_name FROM images 
