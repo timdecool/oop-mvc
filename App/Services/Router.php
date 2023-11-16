@@ -1,5 +1,6 @@
 <?php 
 namespace App\Services;
+use App\Controllers\ImageController;
 
 /**
  * Simple class to get the page to insert in the general layout based on $_GET['page']
@@ -9,10 +10,12 @@ class Router {
     // Properties
     private $page;
     private $action;
+    private $class;
 
     // Constructor
     public function __construct() {
         $this->setPage();
+        $this->setClass();        
         $this->setAction();
     }
 
@@ -26,18 +29,25 @@ class Router {
     }
 
     public function setAction() {
-        $this->action = isset($_GET['method']) ? strtolower($_GET['method']):'index';
+        $this->action = isset($_GET['method']) && method_exists($this->getClass(),$_GET['method']) ? strtolower($_GET['method']):'index';
     }
 
     public function getAction() {
         return $this->action;
     }
 
+    public function setClass() {
+        $this->class='App\Controllers\\'.ucfirst($this->getPage()).'Controller';
+    }
+
+    public function getClass() {
+        return $this->class;
+    }
+
     public function run() {
         // Détermination de la route ?page
-        $page = $this->getPage();
         $action = $this->getAction();
-        $controllerName = 'App\Controllers\\'.ucfirst($page).'Controller';
+        $controllerName = $this->getClass();
         $controller = new $controllerName();
         $controller->$action();
     }

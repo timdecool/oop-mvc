@@ -1,24 +1,54 @@
-<!-- Affichage galerie -->
-    <?php if(!isset($_GET['method'])): ?>
-    <section class="d-flex flex-column align-items-center">
-        <h2 class="text-center my-3">Galerie</h2>
-        <a class="btn btn-success" href="?page=image&method=add">Nouvelle image</a>
-    </section>
-    <section class="container-fluid d-flex flex-wrap gap-2 justify-content-center mt-3 mb-3">
-        <?php foreach($data['gallery'] as $i) : ?>
-            <article class="card col-sm-12 col-md-5 col-lg-3">
-                <a href="?page=details&id=<?= $i['id']?>" style="height: 230px; overflow:hidden;"><img src=<?= $i['src']?> alt="<?= $i['title']?>" title="<?= $i['description'].' par '.$i['author']; ?>" class="card-img-top"></a>
-                <div class="card-body">
-                    <h5 class="card-title"><?= $i['title']; ?></h5>
-                    <a href="?page=image&method=edit&id=<?= $i['id']?>" class="btn btn-secondary"><small>Éditer</small></a>
-                    <a href="?page=image&method=delete&id=<?= $i['id']?>" class="btn btn-danger"><small>Supprimer</small></a>
-                </div>
-                <div class="card-footer">
-                    <small class="text-body-secondary"><a href="<?= $i['author_link']?>" class="text-body-secondary" target="_blank"><?= $i['author']?></a><?=' - Le '.date_format(date_create($i['date_added']),"d M Y"); ?></small>
-                </div>
-            </article>
-        <?php endforeach; ?>
-    </section>
-    <?php endif; ?>
-<!-- Fin affichage galerie -->
+<section class="container-fluid my-5">
+    <h2 class="text-center">Admin - Images</h2>
+  
+  <a href="?page=image&method=add" class="btn btn-success">Ajouter une image</a>
+  <table class="table table-striped my-3">
+    <thead>
+      <tr scope="row">
+        <th scope="col">#</th>
+        <th scope="col">Vignette</th>
+        <th scope="col">Source</th>
+        <th scope="col">Title</th>
+        <th scope="col">Author</th>
+        <th scope="col">Author link</th>
+        <th scope="col">Description</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php foreach ($data['gallery'] as $i) : ?>
+          <tr scope="row">
+              <th><?= $i['id'] ?></th>
+              <td scope="col">
+                <a href="?page=details&id=<?= $i['id'] ?>">
+                  <img width="100" src="<?= $i['src'] ?>">
+                </a>
+              </td>
+              <td scope="col" class='src'><?= $i['src'] ?></td>
+              <td scope="col"><?= $i['title'] ?></td>
+              <td scope="col"><?= $i['author'] ?></td>
+              <td scope="col"><?= $i['author_link'] ?></td>
+              <td scope="col" class='desc'><?= $i['description'] ?></td>
+              <td scope="col"><a class="btn btn-warning mb-1" href="?page=image&method=edit&id=<?=$i['id']?>">Éditer</a>
+              <a href="javascript:deleteConfirm(<?= intval($i['id']) ?>)" class="btn btn-danger">Supprimer</a></td>
+          </tr>
+      <?php endforeach ?>
+    </tbody>
+  </table>
+  <?php if(sizeof($data['gallery']) == 0) echo '<p class="text-center">Postez votre premier article et il s\'affichera ici.</p>'; ?>
+  
+  <a href="?page=image&method=add" class="btn btn-success mb-3">Ajouter une image</a>
+</section>
 
+<script>
+    const sources = document.querySelectorAll('.src,.desc');
+    for(source of sources) {
+        source.textContent = source.textContent.substr(0,60) + "...";
+    }
+
+    function deleteConfirm(id) {
+      if(confirm("Voulez-vous vraiment supprimer cet élément ?")) {
+        location.href = `?page=image&method=delete&id=${id}`;
+      }
+    }
+</script>
