@@ -1,9 +1,9 @@
 <?php
 namespace App\Models;
-use App\Models\Table;
+use App\Models\AbstractTable;
 use DateTime;
 
-class User extends Table {
+class User extends AbstractTable {
     // Properties
     private ?string $role = null;
     private ?string $firstName = null;
@@ -14,10 +14,6 @@ class User extends Table {
     private ?\DateTime $lastVisit = null;
     private ?string $password = null;
     private ?int $idImage = null;
-
-    public function __construct() {
-
-    }
 
     // Role
     /**
@@ -152,5 +148,45 @@ class User extends Table {
      */
     public function setIdImage(?int $idImage) {
         $this->idImage = $idImage;
+    }
+
+    public function toArray() {
+        return [
+            $this->firstName, 
+            $this->lastName, 
+            $this->mail, 
+            password_hash($this->password,PASSWORD_DEFAULT)
+        ];
+    }
+
+    public function validate() :array {
+        $errors = [];
+
+        if(empty($this->firstName)) {
+            $errors[] = "Veuillez renseigner votre prénom.";
+        }
+
+        if(empty($this->lastName)) {
+            $errors[] = "Veuillez renseigner votre nom.";
+        }
+
+        if(!filter_var($this->mail, FILTER_VALIDATE_EMAIL)) {
+            $errors[] = "Veuillez renseigner un email valide.";
+        }
+
+        $manager = new UserManager();
+        $users = $manager->getAll("mail");
+        foreach($users as $u) {
+            if($u['mail'] == $this->mail) {
+                $errors[] = "Il existe déjà un compte associé à cet e-mail.";
+            }
+        }
+
+
+        if(strlen($this->password) < 6) {
+            $errors[] = "Veuillez choisir un mot de passe d'au moins 6 caractères.";
+        }
+
+        return $errors;
     }
 }

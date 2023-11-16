@@ -1,8 +1,8 @@
 <?php
 namespace App\Models;
-use App\Models\Model;
+use App\Models\AbstractManager;
 
-class ImageUser extends Model {
+class ImageUser extends AbstractManager {
     public function getImageDetails($id) {
         $image = [];
         $image = $this->db->query("SELECT images.*, users.first_name AS first_name, users.last_name AS last_name FROM images 

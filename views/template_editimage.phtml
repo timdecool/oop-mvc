@@ -1,0 +1,43 @@
+<!-- PAGE HEADER -->
+<section class="d-flex flex-column align-items-center">
+    <h2 class="text-center my-3">Éditer une image</h2>
+    <a class="btn btn-secondary mb-3" href="?page=image">Retour galerie</a>
+</section>
+
+<!-- FORM -->
+<section class="row container-fluid">
+    <form method="POST" class="card p-4 mx-auto mb-3 col-md-6 col-12">
+        <div class="form-group mb-2">
+            <label for="firstName">Source<span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="src" name="src" placeholder="https://..." value="<?= $data['img']['src'] ?>" required>
+        </div>
+
+        <div class="form-group mb-2">
+            <label for="lastName">Titre<span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="title" name="title" placeholder="Votre titre ici" value="<?= $data['img']['title'] ?>" required>
+        </div>
+
+        <div class="form-group mb-2">
+            <label for="author">Auteur<span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="author" name="author" placeholder="L'auteur ici" value="<?= $data['img']['author'] ?>" required>
+        </div>
+
+        <div class="form-group mb-2">
+            <label for="author-link">Lien auteur<span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="author-link" name="author-link" placeholder="https://..." value="<?= $data['img']['author_link'] ?>" required>
+        </div>
+
+        <div class="form-group mb-2">
+            <label for="password">Description<span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="description" name="description" placeholder="Une belle photographie représentant..." value="<?= $data['img']['description'] ?>" required>
+        </div>
+
+        <button type="submit" name="editImg" class="btn btn-success mb-2 mt-2">Envoyer l'image</button>
+        <?php foreach($data['errors'] as $e) : ?>
+            <p class="text-danger text-center mb-0"><?= $e ?></p>        
+        <?php endforeach; ?>
+    </form>
+    <div class="col-md-6 col-12">
+        <img src="<?= $data['img']['src']?>" alt="<?= $data['img']['title'] ?>" class="img-fluid">
+    </div>
+</section>

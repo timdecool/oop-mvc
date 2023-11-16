@@ -8,11 +8,12 @@ namespace App\Services;
 class Router {
     // Properties
     private $page;
+    private $action;
 
     // Constructor
     public function __construct() {
         $this->setPage();
-        // On appelle un accesseur, une méthode qui définit la page;
+        $this->setAction();
     }
 
     // Methods
@@ -22,5 +23,22 @@ class Router {
     
     public function getPage() {
         return $this->page;
+    }
+
+    public function setAction() {
+        $this->action = isset($_GET['method']) ? strtolower($_GET['method']):'index';
+    }
+
+    public function getAction() {
+        return $this->action;
+    }
+
+    public function run() {
+        // Détermination de la route ?page
+        $page = $this->getPage();
+        $action = $this->getAction();
+        $controllerName = 'App\Controllers\\'.ucfirst($page).'Controller';
+        $controller = new $controllerName();
+        $controller->$action();
     }
 }

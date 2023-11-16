@@ -6,7 +6,7 @@ namespace App\Models;
  * @package App\Models\Table
  */
 
-abstract class Table {
+abstract class AbstractTable {
     protected ?int $id = null;
     
     public function __construct(?int $id = null) {

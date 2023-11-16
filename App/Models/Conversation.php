@@ -1,8 +1,8 @@
 <?php
 namespace App\Models;
-use App\Models\Model;
+use App\Models\AbstractManager;
 
-class Conversation extends Model {
+class Conversation extends AbstractManager {
     public function getAllByUser($id) {
         $conv = [];
         $conv = $this->db->query("SELECT * FROM conversations_users WHERE id_user=? ORDER BY last_seen DESC",[$id],"all");

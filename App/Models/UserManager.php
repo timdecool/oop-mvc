@@ -1,11 +1,12 @@
 <?php
 namespace App\Models;
-use App\Models\Model;
+use App\Models\AbstractManager;
 
-class UserManager extends Model {
-    public function getAll() {
+class UserManager extends AbstractManager {
+    public function getAll(?string $col="*") {
         $users = [];
-        $users = $this->db->query("SELECT * FROM users ORDER BY id DESC",[],"all");
+        $select = 'SELECT '.$col.' FROM users ORDER BY id DESC';
+        $users = $this->db->query($select,[],"all");
         return $users;       
     }
 
@@ -21,8 +22,8 @@ class UserManager extends Model {
         return $user;
     }
 
-    public function addUser($firstName, $lastName, $mail, $password) {
-        $this->db->query("INSERT INTO users SET first_name = ?, last_name = ?, mail = ?, password = ?",[$firstName, $lastName, $mail, $password]);
+    public function insert($infoArray) {
+        $this->db->query("INSERT INTO users SET first_name = ?, last_name = ?, mail = ?, password = ?",$infoArray);
     }
 
     public function updateUser($firstName, $lastName, $mail, $id) {

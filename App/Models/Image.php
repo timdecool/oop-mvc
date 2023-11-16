@@ -1,70 +1,178 @@
 <?php
 namespace App\Models;
-use App\Models\Model;
+use App\Models\AbstractTable;
+use DateTime;
 
+class Image extends AbstractTable {
+    // Properties
+    private ?string $src = null;
+    private ?string $title = null;
+    private ?string $description = null;
+    private ?string $author = null;
+    private ?string $authorLink = null;
+    private ?DateTime $dateAdded = null;
+    private ?DateTime $dateUpdated = null;
+    private ?int $idUser = null;
 
-class Image extends Model {
-    /////////////////////
-    ////// SELECTS //////
-    /////////////////////
-
-    public function getAll(): array {
-        $images = [];
-        $images = $this->db->query("SELECT * FROM images ORDER BY id DESC",[],"all");
-        return $images;        
+    /**
+     * Get the value of src
+     */
+    public function getSrc(): ?string
+    {
+        return $this->src;
     }
 
-    public function countAll(): int {
-        $count = 0;
-        $count = $this->db->query("SELECT COUNT(*) AS count FROM images",[],"col");
-        return $count;        
+    /**
+     * Set the value of src
+     */
+    public function setSrc(?string $src): void
+    {
+        $this->src = $src;
     }
 
-    public function getAllByUser($id) {
-        $images = [];
-        $images = $this->db->query("SELECT * FROM images WHERE id_user=? ORDER BY id DESC",[$id],"all");
-        return $images;
+    /**
+     * Get the value of title
+     */
+    public function getTitle(): ?string
+    {
+        return $this->title;
     }
 
-    public function getOnePage($offset,$limit) {
-        $images = [];
-        $images = $this->db->limitedQuery("SELECT * FROM images ORDER BY id DESC LIMIT :offset,:limit",$offset,$limit);
-        return $images;
+    /**
+     * Set the value of title
+     */
+    public function setTitle(?string $title): void
+    {
+        $this->title = $title;
     }
 
-    public function getOne($id) {
-        $image = [];
-        $image = $this->db->query("SELECT * FROM images WHERE id=?",[$id],"row");
-        return $image;
+    /**
+     * Get the value of description
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
     }
 
-    public function getLastImages() {
-        $images = [];
-        $images = $this->db->query("SELECT * FROM images ORDER BY id DESC limit 3",[],"all");
-        return $images;
+    /**
+     * Set the value of description
+     */
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
     }
 
-    public function getImagesByQuery($query) {
-        $images = [];
-        $images = $this->db->query("SELECT * FROM images WHERE author LIKE ? OR title LIKE ? OR description LIKE ? OR id LIKE ?",["%".$query."%","%".$query."%","%".$query."%","%".$query."%"],"all");
-        return $images;
+    /**
+     * Get the value of author
+     */
+    public function getAuthor(): ?string
+    {
+        return $this->author;
     }
 
-    //////////////////
-    /////// CUD //////
-    //////////////////
-
-    public function addImage($src,$title,$author,$authorLink,$description,$id_user) {
-        $this->db->query("INSERT INTO images (src, title, author, author_link, description, id_user) VALUES (?, ?, ?, ?, ?, ?)",
-        [$src,$title,$author,$authorLink,$description,$id_user]);
+    /**
+     * Set the value of author
+     */
+    public function setAuthor(?string $author): void
+    {
+        $this->author = $author;
     }
 
-    public function updateImage($src,$title,$author,$authorLink,$description,$id) {
-        $this->db->query("UPDATE images SET src=?, title=?, author=?, author_link=?, description=?, date_updated=? WHERE id = ?",
-        [$src,$title,$author,$authorLink,$description,date('Y-m-d H:i:s'),$id]);
+    /**
+     * Get the value of author_link
+     */
+    public function getAuthorLink(): ?string
+    {
+        return $this->authorLink;
     }
 
-    public function deleteImage($id) {
-        $this->db->query("DELETE FROM images WHERE id=?",[$id]);
+    /**
+     * Set the value of author_link
+     */
+    public function setAuthorLink(?string $authorLink): void
+    {
+        $this->authorLink = $authorLink;
+    }
+
+    /**
+     * Get the value of dateAdded
+     */
+    public function getDateAdded(): ?\DateTime
+    {
+        return $this->dateAdded;
+    }
+
+    /**
+     * Set the value of dateAdded
+     */
+    public function setDateAdded(?\DateTime $dateAdded): void
+    {
+        $this->dateAdded = $dateAdded;
+    }
+
+    /**
+     * Get the value of dateUpdated
+     */
+    public function getDateUpdated(): ?\DateTime
+    {
+        return $this->dateUpdated;
+    }
+
+    /**
+     * Set the value of dateUpdated
+     */
+    public function setDateUpdated(?\DateTime $dateUpdated): void
+    {
+        $this->dateUpdated = $dateUpdated;
+    }
+
+    /**
+     * Get the value of idUser
+     */
+    public function getIdUser(): ?int
+    {
+        return $this->idUser;
+    }
+
+    /**
+     * Set the value of idUser
+     */
+    public function setIdUser(?int $idUser): void
+    {
+        $this->idUser = $idUser;
+    }
+
+    public function validate() {
+        $errors = [];
+
+        if(empty($this->src)) {
+            $errors[] = "Veuillez renseigner la source de l'image.";
+        } else if(!(str_starts_with($this->src,"https://"))) {
+            $errors[] = "La source n'est pas un lien https valide";
+        }
+
+        if(empty($this->title)) {
+            $errors[] = "Veuillez renseigner le titre de l'image.";
+        }
+
+        if(empty($this->author)) {
+            $errors[] = "Veuillez renseigner l'auteur de l'image.";
+        }
+
+        if(empty($this->authorLink)) {
+            $errors[] = "Veuillez renseigner un lien vers le travail de l'auteur.";
+        } else if(!(str_starts_with($this->authorLink,"https://"))) {
+            $errors[] = "Le lien vers le travail de l'auteur n'est pas un lien https valide";
+        }
+
+        if(empty($this->description)) {
+            $errors[] = "Veuillez renseigner la description de l'image.";
+        }
+
+        return $errors;
+    }
+
+    public function toArray() {
+        return [$this->src,$this->title,$this->author,$this->authorLink,$this->description];
     }
 }

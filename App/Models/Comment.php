@@ -1,8 +1,8 @@
 <?php
 namespace App\Models;
-use App\Models\Model;
+use App\Models\AbstractManager;
 
-class Comment extends Model {
+class Comment extends AbstractManager {
     public function getAll() {
         $comments = [];
 

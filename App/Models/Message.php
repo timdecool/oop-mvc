@@ -1,8 +1,8 @@
 <?php
 namespace App\Models;
-use App\Models\Model;
+use App\Models\AbstractManager;
 
-class Message extends Model {
+class Message extends AbstractManager {
 
     public function getAllUserMessages($id) {
         $messages = [];

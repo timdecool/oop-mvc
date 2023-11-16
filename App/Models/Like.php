@@ -1,8 +1,8 @@
 <?php
 namespace App\Models;
-use App\Models\Model;
+use App\Models\AbstractManager;
 
-class Like extends Model {
+class Like extends AbstractManager {
 
     public function countLikes($id_image) {
         $count = 0;
