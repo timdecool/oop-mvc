@@ -22,8 +22,23 @@
             <a class="nav-link active" aria-current="page" href="?page=image">Images</a>
             </li>
         </ul>
-
     </div>
+    <?php if(isset($_SESSION['user'])) : ?>
+      <a class="btn btn-outline-tertiary" href="?page=profile">
+          <?= $_SESSION['user']['first_name'].' '.$_SESSION['user']['last_name'] ?>
+      </a>
+      <?php if(isset($_SESSION['user']) && $_SESSION['user']['role'] != "user") : ?>
+        <a class="btn btn-<?= $_SESSION['user']['role'] == "admin" ? "warning":"success" ?> mx-1" href="?page=admin">
+          <?= $_SESSION['user']['role'] == "admin" ? "Admin":"Mes publications"; ?>
+        </a>
+       <?php endif ?>
+
+       <a class="btn btn-outline-secondary mx-1" href="?page=auth&method=logout">Se déconnecter</a>
+    <?php else : ?>
+      <a href="?page=auth&method=login" class="btn btn-primary">
+        Se connecter
+      </a>
+    <?php endif; ?>
   </div>
 </nav>
     <main class="container-fluid">

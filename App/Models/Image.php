@@ -147,8 +147,8 @@ class Image extends AbstractTable {
 
         if(empty($this->src)) {
             $errors[] = "Veuillez renseigner la source de l'image.";
-        } else if(!(str_starts_with($this->src,"https://"))) {
-            $errors[] = "La source n'est pas un lien https valide";
+        } else if(!str_starts_with($this->src,"https://") && !str_starts_with($this->src,"./uploads")) {
+            $errors[] = "La source n'est pas valide.";
         }
 
         if(empty($this->title)) {
@@ -162,7 +162,7 @@ class Image extends AbstractTable {
         if(empty($this->authorLink)) {
             $errors[] = "Veuillez renseigner un lien vers le travail de l'auteur.";
         } else if(!(str_starts_with($this->authorLink,"https://"))) {
-            $errors[] = "Le lien vers le travail de l'auteur n'est pas un lien https valide";
+            $errors[] = "Le lien vers le travail de l'auteur n'est pas un lien https valide.";
         }
 
         if(empty($this->description)) {
@@ -174,5 +174,12 @@ class Image extends AbstractTable {
 
     public function toArray() {
         return [$this->src,$this->title,$this->author,$this->authorLink,$this->description];
+    }
+
+    public function clean(?array $input):void {
+        $this->setTitle(trim(strip_tags($input['title'])));
+        $this->setAuthor(trim(strip_tags($input['author'])));
+        $this->setAuthorLink(trim(strip_tags($input['author-link'])));
+        $this->setDescription(trim(strip_tags($input['description'])));
     }
 }

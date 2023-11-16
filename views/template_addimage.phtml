@@ -1,42 +1,44 @@
-<!-- Affichage ajout image -->
-<?php if(isset($_GET['method']) && $_GET['method'] === "add") : ?>
-        <section class="d-flex flex-column align-items-center">
-            <h2 class="text-center my-3">Ajouter une image</h2>
-            <a class="btn btn-secondary mb-3" href="?page=image">Retour galerie</a>
-        </section>
-        <section class="d-flex flex-column align-items-center">
-        <form method="POST" class="w-50 card p-4 mx-auto mb-3">
-        <div class="form-group mb-2">
-            <label for="firstName">Source<span class="text-danger">*</span></label>
-            <input type="text" class="form-control" id="src" name="src" placeholder="https://..." required>
-        </div>
+<section class="d-flex flex-column align-items-center">
+        <h2 class="text-center my-3">Ajouter une image</h2>
+        <a class="btn btn-secondary mb-3" href="?page=image">Retour galerie</a>
+    </section>
+    <section class="d-flex flex-column align-items-center">
+        <form method="POST" class="w-50 card p-4 mx-auto mb-3" enctype="multipart/form-data">
+            <div class="d-flex align-items-center justify-content-start gap-3">
+                <div class="mb-3">
+                    <label for="src" class="form-label">Source</label>
+                    <input type="text" name="src" id="src" class="form-control" placeholder="https://...">
+                </div>
+                <p class="mt-4 fs-2"><strong>OU</strong></p>
+                <div class="mt-3">    
+                    <input type="file" name="image_file" accept="image/*">
+                </div>
+            </div>
 
-        <div class="form-group mb-2">
-            <label for="lastName">Titre<span class="text-danger">*</span></label>
-            <input type="text" class="form-control" id="title" name="title" placeholder="Votre titre ici" required>
-        </div>
+            <div class="form-group mb-2">
+                <label for="lastName">Titre<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="title" name="title" placeholder="Votre titre ici" required>
+            </div>
 
-        <div class="form-group mb-2">
-            <label for="author">Auteur<span class="text-danger">*</span></label>
-            <input type="text" class="form-control" id="author" name="author" placeholder="L'auteur ici" required>
-        </div>
+            <div class="form-group mb-2">
+                <label for="author">Auteur<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="author" name="author" placeholder="L'auteur ici" required>
+            </div>
 
-        <div class="form-group mb-2">
-            <label for="author-link">Lien auteur<span class="text-danger">*</span></label>
-            <input type="text" class="form-control" id="author-link" name="author-link" placeholder="https://..." required>
-        </div>
+            <div class="form-group mb-2">
+                <label for="author-link">Lien auteur<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="author-link" name="author-link" placeholder="https://..." required>
+            </div>
 
-        <div class="form-group mb-2">
-            <label for="password">Description<span class="text-danger">*</span></label>
-            <input type="text" class="form-control" id="description" name="description" placeholder="Une belle photographie représentant..." required>
-        </div>
+            <div class="form-group mb-2">
+                <label for="password">Description<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="description" name="description" placeholder="Une belle photographie représentant..." required>
+            </div>
 
-        <button type="submit" name="newImage" class="btn btn-success mb-2 mt-2">Envoyer l'image</button>
-        <?php foreach($data['errors'] as $e) : ?>
-            <p class="text-danger text-center mb-0"><?= $e ?></p>        
-        <?php endforeach; ?>
-    </form>
-
-        </section>
-    <?php endif; ?>
-<!-- Fin affichage ajout image -->
+            <button type="submit" name="newImage" class="btn btn-success mb-2 mt-2">Envoyer l'image</button>
+            <?php foreach($data['errors'] as $e) : ?>
+                <p class="text-danger text-center mb-0"><?= $e ?></p>        
+            <?php endforeach; ?>
+        </form>
+    </section>
+  

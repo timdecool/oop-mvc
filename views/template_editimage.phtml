@@ -32,7 +32,7 @@
             <input type="text" class="form-control" id="description" name="description" placeholder="Une belle photographie représentant..." value="<?= $data['img']['description'] ?>" required>
         </div>
 
-        <button type="submit" name="editImg" class="btn btn-success mb-2 mt-2">Envoyer l'image</button>
+        <button type="submit" name="editImg" class="btn btn-success mb-2 mt-2">Valider les changements</button>
         <?php foreach($data['errors'] as $e) : ?>
             <p class="text-danger text-center mb-0"><?= $e ?></p>        
         <?php endforeach; ?>

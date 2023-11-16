@@ -1,5 +1,6 @@
 <?php
 namespace App;
+session_start();
 
 // Imports nécessaires
 use App\Services\Router;
